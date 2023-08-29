@@ -1,0 +1,444 @@
+@font-face {font-family: MatrixII; src: url(fonts/yu-gi-oh-matrix.ttf);}
+@font-face {font-family: MatrixIIBold; src: url(fonts/yu-gi-oh-matrix-bold.ttf);}
+/* v RESETS v */
+* {box-sizing: border-box; margin: 0; padding: 0;}
+/* ^ RESETS ^ */
+
+body {
+    background-image: url("images/a_seal_of_shadow_and_stars.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: grid;
+    column-gap: 16px;
+    /* text-align: center; <-- Keep this in mind, we did it to be lazy but might need to turn it off */
+    grid-template-rows: 1fr 1fr 6fr;
+    grid-template-areas: 
+    'lcs lcs header header header rcs rcs'
+    'lcs lcs nav nav nav rcs rcs' 
+    'lcs lcs main main main rcs rcs'
+}
+
+/* PAGE TOP */
+header {
+    font-family: MatrixIIBold;
+    text-align: center;
+    grid-area: header;
+    color: white;
+    text-shadow: 0px 0px 6px #990000, 0px 0px 6px #990000, 0px 0px 6px #990000, 0px 0px 10px black;
+}
+
+header > h2 {
+    font-size: 32px;
+    margin: 6px;
+}
+
+header > h4 {
+    font-size: 24px;
+    margin: 6px;
+}
+
+nav {
+    grid-area: nav;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+nav > a {
+    font-family: MatrixIIBold;
+    padding: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    text-shadow: 0px 0px 6px #990000, 0px 0px 6px #990000, 0px 0px 6px #990000;
+    background-color: rgb(71, 71, 138, 0.75);
+}
+
+a:hover {
+    color: rgb(231, 211, 158);
+}
+
+.active {
+    color: goldenrod;
+}
+
+/* SIDE IMAGE STYLING*/
+
+#leftClearSpace {
+    position: relative;
+    grid-area: lcs;
+    left: -7vw;
+    z-index: 5;
+}
+
+#rightClearSpace {
+    position: relative;
+    grid-area: rcs;
+    /* right: -5vw; */
+    z-index: 5;
+}
+
+.imageContainer {
+    position: absolute;
+    justify-content: end;
+    top: 0;
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    overflow: visible;
+    padding-left: 0;
+    padding-right: 0;
+    transition: translate 1s, filter 1s, height 1s, width 1s;
+    transition-timing-function: ease-out;
+    cursor: pointer;
+}
+
+#leftClearSpace > .imageContainer:hover {
+    filter: brightness(180%) contrast(140%) drop-shadow(10px 10px 10px gold);
+    translate: 40px;
+    height: 140%;
+    width: 120%;
+}
+
+#rightClearSpace > .imageContainer:hover {
+    filter: brightness(180%) contrast(140%) drop-shadow(10px 10px 10px silver);
+    translate: -40px;
+    height: 140%;
+    width: 120%;
+}
+
+/* MAIN CONTENT STYLING */
+
+main {
+    background-color: rgb(71, 71, 138, 0.75);
+    padding: 16px;
+    grid-area: main;
+    border-style: solid;
+    border-width: 0px 2px 2px 2px;
+    /* border-color: rgb(71, 71, 107); */
+    border-color: black;
+    border-radius: 12px;
+    color: white;
+    font-family: MatrixIIBold;
+    font-size: 18px;
+    text-shadow: 0px 0px 2px black, 0px 0px 2px black, 0px 0px 6px black;
+    overflow: auto;
+    position: relative;
+}
+
+#home {
+    position: absolute;
+    max-width: 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow: auto;
+    align-items: start;
+}
+
+#home > h2, h3, p {
+    margin: 4px;
+}
+
+#home > p {
+    font-family: Tahoma;
+    font-size: 18px;
+}
+
+/* GLOSSARY */
+
+#glossary {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+#glossaryGrid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+}
+
+/* Better in future to create a div to hold these to get a uniform size of entries. */
+#glossaryGrid > a {
+    display: flex;
+    padding: 30px 50px;
+    justify-content: center;
+    background-color: rgba(216, 82, 33, 0.33);
+    border: 2px solid black;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 20px;
+    box-shadow: 4px 4px 8px black;
+    transition: box-shadow, 0.2s;
+}
+
+#glossaryGrid > a:hover {
+    box-shadow: 0px 0px 0px black;
+}
+
+/* This applies a transparent black background for whatever needed. */
+/* Currently just for the glossary pop outs */
+#fadeoutOverlay {
+    display: none; /*Don't show unless called*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    justify-items: center;
+}
+
+#glossaryPopOutBox {
+    display: none;
+    position: fixed;
+    top: 15%;
+    left: 30%;
+    width: 40%;
+    border: 2px solid black;
+    border-radius: 12px;
+    background-color: white;
+}
+
+#popOutHeader {
+    display: flex;
+    background-color: rgba(216, 82, 33);
+    font-family: MatrixIIBold;
+    color: white;
+    border-radius: 8px;
+    justify-content: center;
+    padding: 10px;
+    text-shadow: -1px -1px 6px black, -1px 0px 6px black, 0px -1px 6px black, 1px 0px 6px black, 0px 1px 6px black, 1px 1px 6px black;
+}
+
+#popOutContent {
+    font-family: Tahoma;
+    color: black;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+}
+
+/* GUESSING GAME */
+/* Uses the fadeoutOverlay effect but here for consistency*/
+#guessResult {
+    z-index: 11;
+    display: none;
+    position: fixed;
+    flex-direction: column;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid black;
+    font-family: MatrixIIBold;
+    color: black;
+    font-size: 24px;
+    padding: 16px;
+    align-items: center;
+}
+
+#guessResult > button {
+    padding: 8px;
+    font-family: MatrixIIBold;
+    font-size: 18px;
+    border-radius: 12px;
+}
+
+#guessGame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#guessGrid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 1fr);
+    gap: 12px 12px;
+
+}
+
+#guessTextDisplay {
+    margin: 24px 0px 0px 24px;
+    padding: 12px;
+    grid-column: 1/2;
+    grid-row: 1/5;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#gtHeader {
+    font-family: MatrixIIBold;
+    font-size: 20px;
+}
+
+#gtClue {
+    padding-top: 24px;
+    font-family: Tahoma;
+}
+
+#guessUtilsArea {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0px 0px 24px 24px;
+    padding: 12px;
+    grid-column: 1/2;
+    grid-row: 5/6;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#guessUtilsArea > button {
+    padding: 12px;
+    font-family: MatrixIIBold;
+}
+
+#guessCardDisplay {
+    position: relative;
+    grid-column: 2/3;
+    grid-row: 1/5;
+    margin: 24px 24px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gcImgContainer {
+    position: absolute;
+    width: 175px;
+    height: 250px;
+    perspective: 1000px;
+}
+
+#guessForm {
+    position: absolute;
+}
+
+#gcImgInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+.cardFlipped {
+    transform: rotateY(180deg);
+}
+
+/* Testing */
+/* #gcImgInner:hover {
+    transform: rotateY(-180deg);
+} */
+
+#cardFront, #cardBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+#cardBack {
+    background-image: url("images/cardBack.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#cardFront {
+    transform: rotateY(180deg);
+    /* Placeholder */
+    background-image: url("images/mirrorForce.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#guessBtnArea {
+    grid-column: 2/3;
+    grid-row: 5/6;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 24px 24px 0px;
+}
+
+#guessButton {
+    font-size: 24px;
+    font-family: MatrixIIBold;
+    padding: 12px;
+}
+
+#guessForm {
+    position: absolute;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    z-index: 5;
+}
+
+#guessForm > input {
+    font-size: 20px;
+    font-family: MatrixIIBold;
+    text-align: center;
+    border: none;
+    /* background-color: rgba(255, 255, 255, 0.65); */
+}
+
+
+
+/* FOOTER */
+
+footer {
+    background-color: black;
+    font-family: MatrixIIBold;
+    font-size: 20px;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    /* CHILD LAYOUT */
+    display: flex;
+    justify-content: center;
+    /* TRANSFORMS */
+    z-index: 10; /* Using 10 since I probably want images to overlap it but most other things to go under */
+    transition-delay: 0.1s;
+    transition: padding 0.5s, font-size 0.5s;
+
+}
+
+footer > a {
+    padding: 1px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+footer:hover {
+    padding: 18px;
+    font-size: 24px;
+}
+
+footer > a:hover {
+    color: goldenrod;
+}
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 1280px) {
+    #leftClearSpace, #rightClearSpace {
+        display: none;
+    }
+}
+

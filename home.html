@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Shadow Realm</title>
+
+    <link rel="stylesheet" href="assets/homeStyle.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script defer src="assets/scripts.js"></script>
+
+</head>
+<body>
+    <!-- USED TO FADE OUT THE SCREEN -->
+    <div id="fadeoutOverlay">
+        <!-- BOX TO STORE GLOSSARY ENTRIES -->
+        <div id="glossaryPopOutBox">
+            <div id="popOutHeader"></div>
+            <div id="popOutContent"></div>
+        </div>
+        <div id="guessResult">
+            <h3 id="guessResultText">TEST</h3>
+            <button id="backButton">Back</button>
+        </div>
+    </div>
+    <!-- ACTUAL SITE -->
+    <header>
+        <h2>The Shadow Realm</a></h2>
+        <h4>Understanding Modern Yu-Gi-Oh</h4>
+    </header>
+    <div id="leftClearSpace"><img class="imageContainer" src='assets/images/darkMagicianVector.png'/></div>
+    <div id="rightClearSpace"><img class="imageContainer" src="assets/images/masterDiamondVector.png"/></div>
+    <nav>
+        <a onclick="nextContent(-1)"><i class="fa fa-chevron-left"></i></a>
+        <a onclick="showContent(0)" class="navLinks">HOME</a>
+        <a onclick="showContent(1)" class="navLinks">GLOSSARY</a>
+        <a onclick="showContent(2)" class="navLinks">GUESS!</a>
+        <a onclick="nextContent(1)"><i class="fa fa-chevron-right"></i></a>
+    </nav>
+    <main>
+        <!-- Within main we want 3 (or more) divs for each of the content elements to be cycled into/out of -->
+        <!-- HOME -->
+        <div id="home" class="contentGallery">
+            <h2>-Welcome Back-</h2>
+            <h3>To the Shadow Realm</h3>
+            <p>Here is a bunch of text just to test out the main info dump area of the HOME content.</p>
+            <p>Yu-Gi-Oh was a classic show and card game that existed primarily in their childhood. For many it stopped there,
+                however Yu-Gi-Oh has been continually updating and expanding on the franchise for over the last 20 years.</p>
+            <p>Though there have been plenty of products in recent times with Duel Links, Cross Duel, Speed Duels and Rush Duels,
+                it was the release of Master Duel in 2022 that encouraged many fans, new and old, to return to this beloved childhood classic.
+            </p>
+            <h3>The Game Has Changed</h3>
+            <p>However a lot has changed since the days of Duelist Kingdom. The complexity and speed of the game has gone well beyond the 
+                days of summoning La Jinn and setting Mirror Force. There is a common sentiment that the game is far too complex for new
+                and returning players to understand.</p>
+        </div>
+        <!-- GLOSSARY -->
+        <div id="glossary" class="contentGallery">
+            <!-- We need another div inside for this to store the grid because our gallery function sets to flex -->
+            <div id="glossaryGrid">
+                <a onclick="displayGlossaryBox('PSCT')">PSCT</a>
+                <a onclick="displayGlossaryBox('TARGET')">Target</a>
+                <a onclick="displayGlossaryBox('TEST')">Piercing</a>
+                <a onclick="displayGlossaryBox('GARNET')">Garnet</a>
+                <a onclick="displayGlossaryBox('TEST')">Test</a>
+                <a onclick="displayGlossaryBox('TEST')">Test</a>
+                <a onclick="displayGlossaryBox('TEST')">Test</a>
+            </div>
+        </div>
+        <!-- CARD GUESS GAME -->
+        <div id="guessGame" class="contentGallery">
+            <!-- Grid container for guessing game -->
+            <div id="guessGrid">
+                <div id="guessTextDisplay">
+                    <div id="gtHeader">CLUE</div>
+                    <div id="gtClue">More test</div>
+                </div>
+                <div id="guessUtilsArea">Score:<span id="score"></span><button id="resetButton">Reset</button></div>
+                <div id="guessCardDisplay">
+                    <form id="guessForm" onsubmit="guessTheCard(event)">
+                        <input id="userGuess" type="text" placeholder="Which card am I?"/>
+                    </form>
+                    <div id="gcImgContainer">
+                        <div id="gcImgInner">
+                            <div id="cardBack"></div>
+                            <div id="cardFront"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="guessBtnArea">
+                    <button id="guessButton">Guess!</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <a><i class="fa fa-twitter"></i></a>
+        <a><i class="fa fa-twitch"></i></a>
+        <a><i class="fa fa-youtube"></i></a>
+        <a href="https://store.steampowered.com/app/1449850/YuGiOh_Master_Duel/" target="_blank"><i class="fa fa-steam"></i></a>
+        <a href="https://eu-support.konami.com/hc/en-gb/articles/9648771731479-Copyrights-Career-Opportunities-Goodies" target="_blank"><i class="fa fa-copyright"></i></a>
+    </footer>
+</body>
+</html>
